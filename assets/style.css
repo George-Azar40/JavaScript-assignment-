@@ -29,7 +29,7 @@ body{
 .container
 {
     display: 80%;
-    height: 100vh; /*  To enable the scroll effect in the task scroll      */
+    height: 100vh; 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -101,4 +101,29 @@ body{
     border-radius: 2px;
 }
 
+
+
+.listContainer
+{
+    width: 83.5%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0.2em;  
+}
+
+#noTasksHeader
+{
+    text-align: center;
+    display: none;
+}
+
+.tabsContainer
+{
+    width: 100%;
+    display: flex; 
+    gap: 1em;
+}
 
