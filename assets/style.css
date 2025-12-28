@@ -160,3 +160,41 @@ body{
     color: red;
     text-decoration: line-through  black;
 }
+
+.icons
+{
+    display: flex;
+    gap: 0.5em;   
+}
+
+.icons img
+{
+    width: 1em;
+    gap: 0.5em;
+    cursor: pointer;
+}
+
+
+
+.deleteContainer
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+.deleteButton
+{
+    width: 100%;
+    padding: 0.5em 0px 0.5em 0px;
+    background-color: #e94242;
+    color: white;
+    border: none;
+    border-radius: 2px;
+}
+
+.hoverEffect
+{
+    box-shadow: 0 0 20px rgba(10, 150, 186, 0.5);   
+}
