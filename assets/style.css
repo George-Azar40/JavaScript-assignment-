@@ -146,3 +146,17 @@ body{
     gap: 0.5em;
     overflow-y: auto;
 }
+
+.task
+{
+    display: flex;
+    justify-content: space-between;   
+    padding: 0.5em;
+    border: 2px solid lightgray;
+}
+
+.taskParagraphCrossed
+{
+    color: red;
+    text-decoration: line-through  black;
+}
