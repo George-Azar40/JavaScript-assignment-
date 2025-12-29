@@ -27,3 +27,34 @@ let taskArr = document.getElementsByClassName("task");
 //btn deleeat
 let deleteDoneButton = document.getElementById("deleteDone")
 let deleteAllButton = document.getElementById("deleteAll")
+
+//Check if a task exists
+const noTasksChecker = ()=>{
+    console.log("Inside noTasksChecker");
+    let taskCount = document.getElementsByClassName("task");
+    if(taskCount.length <= 0){ //number task=0 -->No Task
+        noTasksHeader.style.display = "block";
+    }
+    else{
+        noTasksHeader.style.display = "";
+    }
+}
+// delete all
+const removeTasksHTML = ()=>{
+    let tasks = document.getElementsByClassName("task");
+    Array.from(tasks).forEach(task =>{
+        task.remove();
+    })  
+}
+//delete ending(task done ==>'t'but task not done ==>'f')
+const removeTasksDoneHTML = ()=>{
+    let tasks = document.getElementsByClassName("task");
+    Array.from(tasks).forEach(task =>{
+        if(task.id[1] == 't')
+            task.remove();
+    })
+   }
+
+
+
+
