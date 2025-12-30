@@ -117,4 +117,59 @@ const checkInpt = (textTT)=>{
     }
      
 };
+// edit (promise)
+const confirmOpreationEdit = ()=>{
+    let flag = [];
+    flag[0] = "0";
+    inputEdit.value= "";
+    alertEdit.style.display = "flex";
+
+    return new Promise((resolve, reject) =>{
+
+        confirmOpreationButtonEdit.addEventListener("click", ()=>{
+            if(checkInpt(inputEdit.value)){
+                flag[0] = "1";
+                flag[1] = inputEdit.value;
+                alertEdit.style.display = "none";
+                resolve(flag);
+            }
+            else{
+                inputEditNote.style.display = "block";
+                setTimeout(()=>{
+                    inputEditNote.style.display = "none";
+        
+                }, 3000);
+            }
+                
+        })
+        cancelOpreationButtonEdit.addEventListener("click", ()=>{
+            alertEdit.style.display = "none";
+            resolve(flag);
+        })
+ 
+    })
+
+};
+// add confirm Opreation 
+const confirmOpreation = ()=>{
+
+    let flag = false;
+    alert.style.display = "flex";
+    return new Promise((resolve, reject)=>{
+       
+        confirmOpreationButton.addEventListener("click", ()=>{
+           
+            alert.style.display = "none";
+            flag = true;
+            resolve(flag);
+        }),
+
+        cancelOpreationButton.addEventListener("click", ()=>{
+           
+            alert.style.display = "none";
+            resolve(flag =false);
+    
+        })
+            });
+        };
 
