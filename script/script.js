@@ -75,5 +75,28 @@ const storeTaskChange = (task, index, flag)=>{
     }
 }
 
+//add task to localstor
+const storeLocal = (task)=>{
+
+    let localTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+// add new task ro arr
+    localTasks.push(task);
+// save update
+ localStorage.setItem("tasks", JSON.stringify(localTasks));
+}
+// task new
+const saveTask = (text)=>{
+    mainInput.value = "";
+    let task = {
+        taskId : Math.floor((Math.random()*5)) + 'f',
+        paragraphStatus: "",
+        paragraphContent: text
+    };
+
+    displayTaskOnAddNew(task);
+    noTasksChecker();
+    storeLocal(task); 
+};
+
 
 
