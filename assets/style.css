@@ -318,3 +318,22 @@ body{
     color: white;
 
 }
+.alertEditConfirmButton
+{
+    background-color: #0a96ba;
+    color: white;
+}
+
+#cancelOpreationButtonEdit
+{
+    background-color: #e94242;
+}
+
+#inputEditNote
+{
+    display: none;
+    color: red;
+
+    font-size: 1em;
+    text-align: center;
+}
