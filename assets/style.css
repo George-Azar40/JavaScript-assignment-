@@ -198,3 +198,22 @@ body{
 {
     box-shadow: 0 0 20px rgba(10, 150, 186, 0.5);   
 }
+
+
+.alert
+{
+    height: 100%;
+    width: 100%;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 6969;
+}
