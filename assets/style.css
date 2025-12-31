@@ -294,3 +294,19 @@ body{
     border-radius: 1em;
     background-color: white;
 }
+.alertEditContent input
+{
+    padding: 0.5em 6em 0.5em 1em; 
+
+
+    border: 1px solid black;
+    outline: none;
+    
+}
+
+.alertEditContent div
+{
+    display: flex;
+    gap: 1em;
+    
+}
