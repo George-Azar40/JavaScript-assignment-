@@ -215,4 +215,60 @@ let tempParagraph = document.createElement("p");
 
 }
 
+const displayTasks = ()=>{
+   
+    const unloadedTasks = unloadTask();
+
+    
+    
+    if(unloadedTasks.length > 0){
+        unloadedTasks.forEach(task =>{
+//  creating the new div
+            let newTask = document.createElement("div");
+
+            newTask.classList  = "task";
+            newTask.id = task.taskId;
+
+ // creating elemnt p           
+            let tempParagraph = document.createElement("p");
+            tempParagraph.textContent = task.paragraphContent;
+            if(task.taskId[1] === 't')
+                tempParagraph.classList = "taskParagraphCrossed";
+           
+
+// creating div(icons)
+            let iconDiv = document.createElement("div");
+            iconDiv.classList = "icons";
+
+            let tempCheckbox = document.createElement("input");
+            tempCheckbox.type = "checkbox";
+            if(task.taskId[1] === 't')
+                tempCheckbox.checked = true;
+
+            let tempImg1 = document.createElement("img");
+            tempImg1.src = "assets/icones/pencil-solid.svg"
+            tempImg1.alt = "pencilIcon";
+
+            let tempImg2 = document.createElement("img")
+            tempImg2.src = "assets/icones/trash-solid.svg";
+            tempImg2.alt = "deleteIcon";
+
+            
+            iconDiv.append(tempCheckbox);
+            iconDiv.append(tempImg1)
+            iconDiv.append(tempImg2)
+
+            
+            newTask.append(tempParagraph);
+            newTask.append(iconDiv);
+            
+            scrollContainerDiv.append(newTask);
+
+        })
+    }
+    console.log("This is inside display tasks and these are the tasks :")
+    console.log(unloadedTasks);
+      
+}
+
 
