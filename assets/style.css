@@ -277,3 +277,20 @@ body{
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 8000;
 }
+.alertEditContent
+{
+
+    width: 25em;
+    height: 15em;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2em;
+
+
+
+    border-radius: 1em;
+    background-color: white;
+}
