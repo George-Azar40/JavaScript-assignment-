@@ -234,3 +234,14 @@ body{
     border-radius: 1em;
     background-color: white;
 }
+.alertContent h1
+{
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.alertContent div
+{
+    display: flex;
+    gap: 2em;
+}
