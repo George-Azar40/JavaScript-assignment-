@@ -332,3 +332,26 @@ doneButton.onclick = ()=>
 
 
 };
+
+
+
+todoButton.onclick = ()=>
+{
+    todoButton.classList.add("hoverEffect")
+    allButton.classList.remove("hoverEffect")
+    doneButton.classList.remove("hoverEffect")
+
+    if(taskArr.length >= 1)
+    {
+        for(let task of taskArr)
+        {
+            if(task.id[1] === 'f')
+                task.style.display = "";
+            else
+                task.style.display = "none";
+        }
+    }
+        
+        
+
+};
