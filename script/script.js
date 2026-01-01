@@ -510,3 +510,117 @@ window.onload = ()=>{
     displayTasks();
     noTasksChecker();
 }
+
+
+
+
+
+
+
+
+
+
+
+const input = document.getElementById("mainInput");
+const addBtn = document.getElementById("inputButton");
+const listContainer = document.getElementById("scrollContainer");
+const deleteDoneBtn = document.getElementById("deleteDone");
+const deleteAllBtn = document.getElementById("deleteAll");
+
+const alertBox = document.querySelector(".alert");
+const editInput = document.getElementById("alertEditContentInput");
+const confirmEdit = document.getElementById("confirmOpreationButtonEdit");
+const cancelEdit = document.getElementById("cancelOpreationButtonEdit");
+
+let tasks = [];
+let currentEditId = null;
+
+addBtn.onclick = () => {
+  const text = input.value.trim();
+  if (text.length < 5 || !isNaN(text[0])) return;
+
+  tasks.push({
+    id: Date.now(),
+    text,
+    done: false
+  });
+
+  input.value = "";
+  renderTasks();
+};
+
+function renderTasks(filter = "all") {
+  listContainer.innerHTML = "";
+
+  let filteredTasks = tasks;
+  if (filter === "done") filteredTasks = tasks.filter(t => t.done);
+  if (filter === "todo") filteredTasks = tasks.filter(t => !t.done);
+
+  if (filteredTasks.length === 0) {
+    listContainer.innerHTML = `<h3 id="noTasksHeader">NO TASKS!</h3>`;
+    return;
+  }
+
+  filteredTasks.forEach(task => {
+    const div = document.createElement("div");
+    div.className = "task";
+
+    div.innerHTML = `
+      <span style="${task.done ? 'text-decoration:line-through' : ''}">
+        ${task.text}
+      </span>
+      <div>
+        <input type="checkbox" ${task.done ? "checked" : ""}>
+        <button class="edit">✏️</button>
+        <button class="delete">🗑️</button>
+      </div>
+    `;
+
+    div.querySelector("input").onchange = () => {
+      task.done = !task.done;
+      renderTasks();
+    };
+
+    div.querySelector(".delete").onclick = () => {
+      tasks = tasks.filter(t => t.id !== task.id);
+      renderTasks();
+    };
+
+    div.querySelector(".edit").onclick = () => {
+      currentEditId = task.id;
+      editInput.value = task.text;
+      alertBox.style.display = "block";
+    };
+
+    listContainer.appendChild(div);
+  });
+}
+
+confirmEdit.onclick = () => {
+  const newText = editInput.value.trim();
+  if (newText.length < 5 || !isNaN(newText[0])) return;
+
+  const task = tasks.find(t => t.id === currentEditId);
+  task.text = newText;
+
+  alertBox.style.display = "none";
+  renderTasks();
+};
+
+cancelEdit.onclick = () => {
+  alertBox.style.display = "none";
+};
+
+deleteDoneBtn.onclick = () => {
+  tasks = tasks.filter(t => !t.done);
+  renderTasks();
+};
+
+deleteAllBtn.onclick = () => {
+  tasks = [];
+  renderTasks();
+};
+
+document.getElementById("all").onclick = () => renderTasks("all");
+document.getElementById("done").onclick = () => renderTasks("done");
+document.getElementById("todo").onclick = () => renderTasks("todo");
