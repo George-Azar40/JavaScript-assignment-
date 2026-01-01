@@ -290,3 +290,23 @@ addNewTaskButton.onclick = ()=>
     }
         
 }
+
+
+
+allButton.onclick = ()=>
+{
+    allButton.classList.add("hoverEffect");
+    doneButton.classList.remove("hoverEffect")
+    todoButton.classList.remove("hoverEffect")
+   
+    if(taskArr.length >=1)
+    {
+        for(let task of taskArr)
+        {
+            task.style.display = "";
+        }
+    }
+    
+    
+
+};
