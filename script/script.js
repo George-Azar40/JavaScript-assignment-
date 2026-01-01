@@ -310,3 +310,25 @@ allButton.onclick = ()=>
     
 
 };
+
+
+doneButton.onclick = ()=>
+{
+    doneButton.classList.add("hoverEffect")
+    allButton.classList.remove("hoverEffect")
+    todoButton.classList.remove("hoverEffect")
+
+
+    if(taskArr.length >=1)
+    {
+        for(let task of taskArr)
+        {
+            if(task.id[1] === 't')
+                task.style.display = "";
+            else
+                task.style.display = "none";
+        }
+    }
+
+
+};
