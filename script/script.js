@@ -408,3 +408,98 @@ deleteAllButton.onclick = async ()=>
         
     
 };
+
+
+scrollContainerDiv.addEventListener("click", async (event)=>{
+    if(event.target.alt === "deleteIcon"){
+        const taskToDelete = event.target.closest(".task");
+        if(taskToDelete){
+            unloadedTasks = unloadTask();
+            if(unloadedTasks.length > 0){
+                let foundTask = unloadedTasks.find(task => taskToDelete.id === task.taskId);
+               
+                if(foundTask){
+                    let foundTaskIndex = unloadedTasks.indexOf(foundTask);
+                 
+                    storeTaskChange(unloadedTasks[foundTaskIndex], foundTaskIndex, 1);
+                    taskToDelete.remove();
+                    noTasksChecker();
+                }             
+            }        
+        }
+    }
+
+    if(event.target.alt === "pencilIcon" ){
+        let flag = await confirmOpreationEdit();
+        if(flag[0] === "1"){
+
+           
+            const taskToEdit = event.target.closest(".task");
+            const paragraphToEdit  = taskToEdit.querySelector("p");
+            paragraphToEdit.textContent = flag[1];
+
+            if(taskToEdit){
+                unloadedTasks = unloadTask();
+                
+                
+    
+                if(unloadedTasks.length > 0){
+                    let foundTask = unloadedTasks.find(task => taskToEdit.id === task.taskId);
+                    
+                    if(foundTask){
+                        let foundTaskIndex = unloadedTasks.indexOf(foundTask);
+                        
+
+                        unloadedTasks[foundTaskIndex].paragraphContent = flag[1];
+                        storeTaskChange(unloadedTasks[foundTaskIndex], foundTaskIndex, 0);
+                        
+                    }       
+                }       
+            }
+        }
+       
+    }
+    if(event.target.type ==="checkbox" && (event.target.checked || !event.target.checked) ){
+       
+
+        const taskToDone = event.target.closest(".task");
+        const paragraphToEdit  = taskToDone.querySelector("p");
+
+        if(taskToDone){
+            unloadedTasks = unloadTask();
+         
+
+            if(unloadedTasks.length > 0){
+                let foundTask = unloadedTasks.find(task => taskToDone.id === task.taskId);
+           
+                if(foundTask){
+   
+                    if(taskToDone.id[1] === 'f'){
+            
+                        taskToDone.id = taskToDone.id[0] + 't' + taskToDone.id[1].slice(2);
+                       
+                    }
+                    else if (taskToDone.id[1] === 't') {
+                        taskToDone.id = taskToDone.id[0] + 'f' + taskToDone.id[1].slice(2);
+                   
+                    }
+
+
+                    let foundTaskIndex = unloadedTasks.indexOf(foundTask);
+                  
+                    unloadedTasks[foundTaskIndex].taskId = taskToDone.id;
+
+                    storeTaskChange(unloadedTasks[foundTaskIndex], foundTaskIndex, 0);
+                    paragraphToEdit.classList.toggle("taskParagraphCrossed");
+                }
+                    
+            }
+                
+        }
+         
+    }
+
+   
+
+
+});
