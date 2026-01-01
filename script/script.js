@@ -385,3 +385,26 @@ deleteDoneButton.onclick = async ()=>
      
     
 };
+
+
+deleteAllButton.onclick = async ()=>
+{
+    const unloadedTasks = unloadTask();
+    
+    if(unloadedTasks.length >= 1)
+    {
+        let flag =await confirmOpreation();
+
+        if(flag){
+            localStorage.removeItem("tasks");
+            displayTasks();
+            removeTasksHTML();
+            noTasksChecker();
+        }
+           
+        
+    }
+    
+        
+    
+};
