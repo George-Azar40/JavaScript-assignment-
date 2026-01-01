@@ -274,6 +274,7 @@ const displayTasks = ()=>{
 
 
 
+
 addNewTaskButton.onclick = ()=>
 {
     let text = mainInput.value;
@@ -624,3 +625,4 @@ deleteAllBtn.onclick = () => {
 document.getElementById("all").onclick = () => renderTasks("all");
 document.getElementById("done").onclick = () => renderTasks("done");
 document.getElementById("todo").onclick = () => renderTasks("todo");
+=======
