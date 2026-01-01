@@ -355,3 +355,33 @@ todoButton.onclick = ()=>
         
 
 };
+
+deleteDoneButton.onclick = async ()=>
+{
+    
+    const unloadedTasks = unloadTask();
+
+    if(unloadedTasks.length >= 1)
+    {
+        let flag =  await confirmOpreation();     
+
+        if(flag)
+        {
+              
+            unloadedTasks.forEach((task, index)=>{
+                if(task.taskId[1] === 't' )
+                {
+                    storeTaskChange(task, index, 1);
+                   
+                }
+
+                removeTasksDoneHTML();
+                noTasksChecker();
+            })
+                
+            
+        }
+    }
+     
+    
+};
