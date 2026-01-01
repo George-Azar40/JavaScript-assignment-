@@ -273,3 +273,356 @@ const displayTasks = ()=>{
 
 
 
+
+
+addNewTaskButton.onclick = ()=>
+{
+    let text = mainInput.value;
+    
+    if(checkInpt(text))
+    {
+        addNewTask(text);
+        inputNote.style.display = "";
+    }
+    else
+    {
+        inputNote.style.display = "block";
+        setTimeout(()=>{inputNote.style.display = ""}, 10000)
+    }
+        
+}
+
+
+
+allButton.onclick = ()=>
+{
+    allButton.classList.add("hoverEffect");
+    doneButton.classList.remove("hoverEffect")
+    todoButton.classList.remove("hoverEffect")
+   
+    if(taskArr.length >=1)
+    {
+        for(let task of taskArr)
+        {
+            task.style.display = "";
+        }
+    }
+    
+    
+
+};
+
+
+doneButton.onclick = ()=>
+{
+    doneButton.classList.add("hoverEffect")
+    allButton.classList.remove("hoverEffect")
+    todoButton.classList.remove("hoverEffect")
+
+
+    if(taskArr.length >=1)
+    {
+        for(let task of taskArr)
+        {
+            if(task.id[1] === 't')
+                task.style.display = "";
+            else
+                task.style.display = "none";
+        }
+    }
+
+
+};
+
+
+
+todoButton.onclick = ()=>
+{
+    todoButton.classList.add("hoverEffect")
+    allButton.classList.remove("hoverEffect")
+    doneButton.classList.remove("hoverEffect")
+
+    if(taskArr.length >= 1)
+    {
+        for(let task of taskArr)
+        {
+            if(task.id[1] === 'f')
+                task.style.display = "";
+            else
+                task.style.display = "none";
+        }
+    }
+        
+        
+
+};
+
+deleteDoneButton.onclick = async ()=>
+{
+    
+    const unloadedTasks = unloadTask();
+
+    if(unloadedTasks.length >= 1)
+    {
+        let flag =  await confirmOpreation();     
+
+        if(flag)
+        {
+              
+            unloadedTasks.forEach((task, index)=>{
+                if(task.taskId[1] === 't' )
+                {
+                    storeTaskChange(task, index, 1);
+                   
+                }
+
+                removeTasksDoneHTML();
+                noTasksChecker();
+            })
+                
+            
+        }
+    }
+     
+    
+};
+
+
+deleteAllButton.onclick = async ()=>
+{
+    const unloadedTasks = unloadTask();
+    
+    if(unloadedTasks.length >= 1)
+    {
+        let flag =await confirmOpreation();
+
+        if(flag){
+            localStorage.removeItem("tasks");
+            displayTasks();
+            removeTasksHTML();
+            noTasksChecker();
+        }
+           
+        
+    }
+    
+        
+    
+};
+
+
+scrollContainerDiv.addEventListener("click", async (event)=>{
+    if(event.target.alt === "deleteIcon"){
+        const taskToDelete = event.target.closest(".task");
+        if(taskToDelete){
+            unloadedTasks = unloadTask();
+            if(unloadedTasks.length > 0){
+                let foundTask = unloadedTasks.find(task => taskToDelete.id === task.taskId);
+               
+                if(foundTask){
+                    let foundTaskIndex = unloadedTasks.indexOf(foundTask);
+                 
+                    storeTaskChange(unloadedTasks[foundTaskIndex], foundTaskIndex, 1);
+                    taskToDelete.remove();
+                    noTasksChecker();
+                }             
+            }        
+        }
+    }
+
+    if(event.target.alt === "pencilIcon" ){
+        let flag = await confirmOpreationEdit();
+        if(flag[0] === "1"){
+
+           
+            const taskToEdit = event.target.closest(".task");
+            const paragraphToEdit  = taskToEdit.querySelector("p");
+            paragraphToEdit.textContent = flag[1];
+
+            if(taskToEdit){
+                unloadedTasks = unloadTask();
+                
+                
+    
+                if(unloadedTasks.length > 0){
+                    let foundTask = unloadedTasks.find(task => taskToEdit.id === task.taskId);
+                    
+                    if(foundTask){
+                        let foundTaskIndex = unloadedTasks.indexOf(foundTask);
+                        
+
+                        unloadedTasks[foundTaskIndex].paragraphContent = flag[1];
+                        storeTaskChange(unloadedTasks[foundTaskIndex], foundTaskIndex, 0);
+                        
+                    }       
+                }       
+            }
+        }
+       
+    }
+    if(event.target.type ==="checkbox" && (event.target.checked || !event.target.checked) ){
+       
+
+        const taskToDone = event.target.closest(".task");
+        const paragraphToEdit  = taskToDone.querySelector("p");
+
+        if(taskToDone){
+            unloadedTasks = unloadTask();
+         
+
+            if(unloadedTasks.length > 0){
+                let foundTask = unloadedTasks.find(task => taskToDone.id === task.taskId);
+           
+                if(foundTask){
+   
+                    if(taskToDone.id[1] === 'f'){
+            
+                        taskToDone.id = taskToDone.id[0] + 't' + taskToDone.id[1].slice(2);
+                       
+                    }
+                    else if (taskToDone.id[1] === 't') {
+                        taskToDone.id = taskToDone.id[0] + 'f' + taskToDone.id[1].slice(2);
+                   
+                    }
+
+
+                    let foundTaskIndex = unloadedTasks.indexOf(foundTask);
+                  
+                    unloadedTasks[foundTaskIndex].taskId = taskToDone.id;
+
+                    storeTaskChange(unloadedTasks[foundTaskIndex], foundTaskIndex, 0);
+                    paragraphToEdit.classList.toggle("taskParagraphCrossed");
+                }
+                    
+            }
+                
+        }
+         
+    }
+
+   
+
+
+});
+
+window.onload = ()=>{
+    
+    allButton.classList.add("hoverEffect");
+    displayTasks();
+    noTasksChecker();
+}
+
+
+
+
+
+
+
+
+
+
+
+const input = document.getElementById("mainInput");
+const addBtn = document.getElementById("inputButton");
+const listContainer = document.getElementById("scrollContainer");
+const deleteDoneBtn = document.getElementById("deleteDone");
+const deleteAllBtn = document.getElementById("deleteAll");
+
+const alertBox = document.querySelector(".alert");
+const editInput = document.getElementById("alertEditContentInput");
+const confirmEdit = document.getElementById("confirmOpreationButtonEdit");
+const cancelEdit = document.getElementById("cancelOpreationButtonEdit");
+
+let tasks = [];
+let currentEditId = null;
+
+addBtn.onclick = () => {
+  const text = input.value.trim();
+  if (text.length < 5 || !isNaN(text[0])) return;
+
+  tasks.push({
+    id: Date.now(),
+    text,
+    done: false
+  });
+
+  input.value = "";
+  renderTasks();
+};
+
+function renderTasks(filter = "all") {
+  listContainer.innerHTML = "";
+
+  let filteredTasks = tasks;
+  if (filter === "done") filteredTasks = tasks.filter(t => t.done);
+  if (filter === "todo") filteredTasks = tasks.filter(t => !t.done);
+
+  if (filteredTasks.length === 0) {
+    listContainer.innerHTML = `<h3 id="noTasksHeader">NO TASKS!</h3>`;
+    return;
+  }
+
+  filteredTasks.forEach(task => {
+    const div = document.createElement("div");
+    div.className = "task";
+
+    div.innerHTML = `
+      <span style="${task.done ? 'text-decoration:line-through' : ''}">
+        ${task.text}
+      </span>
+      <div>
+        <input type="checkbox" ${task.done ? "checked" : ""}>
+        <button class="edit">✏️</button>
+        <button class="delete">🗑️</button>
+      </div>
+    `;
+
+    div.querySelector("input").onchange = () => {
+      task.done = !task.done;
+      renderTasks();
+    };
+
+    div.querySelector(".delete").onclick = () => {
+      tasks = tasks.filter(t => t.id !== task.id);
+      renderTasks();
+    };
+
+    div.querySelector(".edit").onclick = () => {
+      currentEditId = task.id;
+      editInput.value = task.text;
+      alertBox.style.display = "block";
+    };
+
+    listContainer.appendChild(div);
+  });
+}
+
+confirmEdit.onclick = () => {
+  const newText = editInput.value.trim();
+  if (newText.length < 5 || !isNaN(newText[0])) return;
+
+  const task = tasks.find(t => t.id === currentEditId);
+  task.text = newText;
+
+  alertBox.style.display = "none";
+  renderTasks();
+};
+
+cancelEdit.onclick = () => {
+  alertBox.style.display = "none";
+};
+
+deleteDoneBtn.onclick = () => {
+  tasks = tasks.filter(t => !t.done);
+  renderTasks();
+};
+
+deleteAllBtn.onclick = () => {
+  tasks = [];
+  renderTasks();
+};
+
+document.getElementById("all").onclick = () => renderTasks("all");
+document.getElementById("done").onclick = () => renderTasks("done");
+document.getElementById("todo").onclick = () => renderTasks("todo");
+=======
